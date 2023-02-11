@@ -1,0 +1,3 @@
+SortedList is going to inherit from List
+
+default constructor may have one parameter that indicates whether its an ascending or decending sorted list, indicated by true/false

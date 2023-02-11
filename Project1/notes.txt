@@ -1,0 +1,50 @@
+#ifndef LIST_H
+#define LIST_H
+
+template <typename T>
+class List {
+public:
+	List();
+	List(T inputList[], int size);
+	List(T v, int n);
+	List(T v); //creates list of size 1
+	
+	virtual ~List(); //destructor that can be overridden by child classes as necessary
+
+	List(const List& obj); //copy constructor
+	List& operator=(const List& obj&); //copy assignment operator (returns List)
+
+	List(List&& tempObj); //move constructor
+	List operator=(List&& tempObj); //move assignment operator
+
+	//getters + setters, const: doesn't change attribute values, final: can't be overridden by child classes
+	int getSize() const final;
+	int getCapacity() const final;
+
+	List<T> operator+(T v); //overload + operator to make a new list from current list + new item
+	List<T> operator+(const List<T>& obj); //overload operator to create new List from two lists
+	List<T> operator-(const List<T>& obj);
+	T& operator[](int index);
+
+	List<T>& operator+=(const List<T>& obj);
+
+	List<T>& operator--(); //prefix version
+	List<T>& operator--(int dummy); //postfix version, uses dummy variable to indicate to compiler
+
+	template<typename U> //using a different template so that it stays friends no matter the type
+	friend ostream& operator<<(ostream& outputStream, const List<U>& mylist);
+
+private:
+	T* l; //l is a pointer to the first item of the list
+	int n; //n is the number of items in the list
+	int capacity; //the max number of items that can be in the list
+};
+
+template<typename T>
+ostream& operator<<(ostream outputStream, const List<T>& myList); //needs two arguments, one for left side and one for right
+//return type is ostream so they can be used in a chain like cout<<l<<etc
+
+template<typename T>
+istream& operator>>(istream& inputStream, List<T> myList);
+
+#endif
